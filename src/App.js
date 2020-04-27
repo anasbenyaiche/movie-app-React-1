@@ -1,14 +1,19 @@
-import React from 'react';
+import React from "react";
+import "./App.css";
+import MoviePage from "./page/movie-page";
+import Description from "./components/description";
+import { Route } from 'react-router-dom'
+import Navbar from "./components/navbar";
 
-import './App.css';
 
-import MoviePage from './page/movie-page';
 
 
 function App() {
   return (
     <div className="App">
-        <MoviePage />
+      <Navbar/>
+      <Route path="/:id" component={Description} />
+      <Route exact path="/" component={MoviePage} />
     </div>
   );
 }

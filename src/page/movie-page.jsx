@@ -4,6 +4,9 @@ import MoviesContainer from "../components/movie-container";
 import FilterName from "../components/name-filter";
 import RatingFilter from "../components/ratingFilter";
 import Modall from "../components/modal";
+import Navbar from "../components/navbar";
+
+
 class MoviePage extends React.Component {
   state = {
     movies,
@@ -30,26 +33,20 @@ class MoviePage extends React.Component {
   }
 
   render() {
-    let filterMovie = this.state.movies.filter(
-      (movie) =>(
-        (movie.star >= this.state.ratingCountFilter)&&
-        (movie.name.toLowerCase().includes(this.state.movieName.toLowerCase()))
-    ));
+    // let filterMovie = this.state.movies.filter(
+    //   (movie) =>(
+    //     (movie.star >= this.state.ratingCountFilter)&&
+    //     (movie.name.toLowerCase().includes(this.state.movieName.toLowerCase()))
+    // ));
     console.log(this.state.movies);
     return (
-      <div>
-        <div className="filter-container">
-          <FilterName search={this.handleSearch} />
-          <RatingFilter
-            count={this.state.ratingCountFilter}
-            onchange={this.handleRatingFilter}
-          />
-        </div>
+      <div >
+    
         <div>
             <Modall add={this.addMovie}/>
         </div>
 
-        <MoviesContainer movies={filterMovie} />
+        <MoviesContainer  />
       </div>
     );
   }

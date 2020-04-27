@@ -1,10 +1,20 @@
-import React from 'react'
+import React from "react";
+import { searchKeyword } from "../redux/actions/actions";
+import { connect } from "react-redux";
 
-const FilterName = ({search}) => {
+const FilterName = ({ searchKeyword }) => {
+  return (
+    <div>
+      <input
+        className="form-control"
+        onChange={(e) => searchKeyword(e.target.value)}
+      />
+    </div>
+  );
+};
 
+const mapDispatchToProps = (dispatch) => ({
+  searchKeyword: (input) => dispatch(searchKeyword(input)),
+});
 
-    return (<div>
-        <input className="form-control" onChange={(e)=>search(e.target.value)} />
-    </div>)
-}
-export default FilterName
+export default connect(null, mapDispatchToProps)(FilterName);

@@ -1,10 +1,19 @@
 import React from 'react'
 import Rating from './rating'
+import { minRating } from '../redux/actions/actions'
+import { connect } from 'react-redux'
 
-const RatingFilter = ({count, onchange}) => {
+const RatingFilter = ({ countRating, minRating}) => {
 
 return (<div>
-    <Rating count={count} change={onchange} />
+    <Rating count={countRating} change={minRating} />
 </div>)
 }
-export default RatingFilter 
+
+const mapDispatchToProps = dispatch => ({
+    minRating : (star)=> dispatch(minRating(star))
+})
+const mapStateToProps = state => ({
+    countRating : state.countRating
+})
+export default connect(mapStateToProps, mapDispatchToProps) (RatingFilter) 

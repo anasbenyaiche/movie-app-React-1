@@ -2,20 +2,26 @@ import React from "react";
 import Modal from "react-modal";
 import "../App.css";
 import { connect } from "react-redux";
-import { addMovie } from "../redux/actions/actions";
-class Modall extends React.Component {
+import { updateMovie } from "../redux/actions/actions";
+class EditModal extends React.Component {
   state = {
     modalIsOpen: false,
-    img: "",
-    name: "",
-    star: "",
-    year: "",
-    duration: "",
+    id: this.props.movie.id,
+    img: this.props.movie.img,
+    name: this.props.movie.name,
+    star: this.props.movie.star,
+    year: this.props.movie.year,
+    duration: this.props.movie.duration,
   };
 
   openModal = () => {
     this.setState({ modalIsOpen: true });
   };
+
+  // afterOpenModal=()=> {
+  //   // references are now sync'd and can be accessed.
+  //   this.subtitle.style.color = '#f00';
+  // }
 
   closeModal = () => {
     this.setState({ modalIsOpen: false });
@@ -28,18 +34,19 @@ class Modall extends React.Component {
     });
   };
 
-  add = (e) => {
+  update = (e) => {
     e.preventDefault();
-    const { img, name, star, year, duration } = this.state;
-    const newMovie = {
+    const { id, img, name, star, year, duration } = this.state;
+    const updatedMovie = {
+      id,
       img,
       name,
       star,
       year,
       duration,
     };
-    console.log(newMovie);
-    this.props.addMovie(newMovie);
+    
+    this.props.updateMovie(updatedMovie);
     this.setState({
       modalIsOpen: false,
     });
@@ -47,19 +54,18 @@ class Modall extends React.Component {
   render() {
     return (
       <div className="">
-        <button className="btn" onClick={this.openModal}>
-          <span role="img" aria-label="addmovie">
-            Add 🎥
-          </span>
+        <button className="btn btn-success" onClick={this.openModal}>
+          Update
         </button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
-          className="modall"
+          className="EditModal"
           contentLabel="Example Modal"
         >
           <label for="lname">Image Url</label>
           <input
+            value={this.state.img}
             type="text"
             id="lname"
             name="img"
@@ -68,6 +74,7 @@ class Modall extends React.Component {
           />
           <label for="fname">Film Name</label>
           <input
+            value={this.state.name}
             type="text"
             id="fname"
             name="name"
@@ -77,6 +84,7 @@ class Modall extends React.Component {
 
           <label for="lname">FIlm rating</label>
           <input
+            value={this.state.star}
             type="text"
             id="lname"
             name="star"
@@ -85,6 +93,7 @@ class Modall extends React.Component {
           />
           <label for="lname">year</label>
           <input
+            value={this.state.year}
             type="text"
             id="lname"
             name="year"
@@ -93,6 +102,7 @@ class Modall extends React.Component {
           />
           <label for="lname">duration</label>
           <input
+            value={this.state.duration}
             type="text"
             id="lname"
             name="duration"
@@ -100,15 +110,16 @@ class Modall extends React.Component {
             onChange={this.handleChange}
           />
 
-          <button onClick={(e) => this.add(e)}>add movie</button>
+          <button className="btn btn-success" onClick={(e) => this.update(e)}>
+            update movie
+          </button>
         </Modal>
       </div>
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  updateMovie: (movie) => dispatch(updateMovie(movie)),
+});
 
-const mapDispatchToProps = dispatch => ({
-  addMovie: (movie)=> dispatch(addMovie(movie))
-})
-
-export default connect(null, mapDispatchToProps)( Modall);
+export default connect(null, mapDispatchToProps)(EditModal);
